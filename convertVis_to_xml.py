@@ -118,4 +118,4 @@ for annotation in annotation_list:
 	f.write(annotation_string_final)
 	f.close()
 	count += 1
-	print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled to : {} x {}'.format(count, sizing, sizing))
+	print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled + Normalized to : {} x {}'.format(count, sizing, sizing))
