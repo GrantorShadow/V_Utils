@@ -3,6 +3,7 @@
 import cv2
 import os
 import numpy as np
+from tqdm import tqdm 
 
 input_img_folder = 'VisDrone2019-DET-train/images'
 input_ann_folder = 'VisDrone2019-DET-train/annotations'
@@ -71,7 +72,7 @@ def object_string(label, bbox):
 	return req_str
 
 
-for annotation in annotation_list:
+for annotation in tqdm(annotation_list):
 	annotation_path = os.path.join(os.getcwd(), input_ann_folder, annotation)
 	xml_annotation = annotation.split('.txt')[0] + '.xml'
 	xml_path = os.path.join(os.getcwd(), output_ann_folder, xml_annotation)
@@ -118,4 +119,5 @@ for annotation in annotation_list:
 	f.write(annotation_string_final)
 	f.close()
 	count += 1
-	print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled + Normalized to : {} x {}'.format(count, sizing, sizing))
+
+print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled + Normalized to : {} x {}'.format(count, sizing, sizing))
