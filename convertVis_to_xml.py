@@ -48,12 +48,6 @@ def upscale_img(sizing, img):
 	return up_scaled_img, x_scale, y_scale
 
 
-def normalize_img(img, sizing):
-	norm_img = np.zeros((sizing, sizing))
-	normalized_image = cv2.normalize(img,  norm_img, 0, 255, cv2.NORM_MINMAX)
-	return normalized_image
-
-
 def object_string(label, bbox):
 	req_str = '''
 	<object>
@@ -82,7 +76,6 @@ for annotation in tqdm(annotation_list):
 	img = cv2.imread(img_path)
 	# scaling the image by the sizing value
 	img, x_scale, y_scale = upscale_img(sizing, img)
-	img = normalize_img(img, sizing)
 	annotation_string_init = '''
 <annotation>
 	<folder>annotations</folder>
