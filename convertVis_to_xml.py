@@ -21,11 +21,12 @@ label_dict = {
 
 
 def upscale_img(sizing, img):
-	w, h = img.size
-	x_scale, y_scale = sizing / w, sizing / h
-	up_scaled_img = img.resize((sizing, sizing))
-	return up_scaled_img, x_scale, y_scale
-
+	if sizing != None:
+		w, h = img.size
+		x_scale, y_scale = sizing / w, sizing / h
+		up_scaled_img = img.resize((sizing, sizing))
+		return up_scaled_img, x_scale, y_scale
+	return img, 1, 1
 
 def object_string(label, bbox):
 	req_str = '''
@@ -64,10 +65,7 @@ def convert(args):
 		output_img_path = os.path.join(os.getcwd(), args.output_img_folder, img_file)
 		img = Image.open(img_path)
 		# scaling the image by the sizing value
-		if args.sizing != None:
-			img, x_scale, y_scale = upscale_img(int(args.sizing), img)
-		else:
-			x_scale, y_scale = 1, 1
+		img, x_scale, y_scale = upscale_img(int(args.sizing), img)
 		annotation_string_init = '''
 	<annotation>
 		<folder>annotations</folder>
@@ -114,7 +112,9 @@ def convert(args):
 		f.close()
 		count += 1
 
-	print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled to : {} x {}'.format(count, args.sizing, args.sizing))
+	print('[INFO] Completed {} image(s) and annotation(s) pair & Upscaled to : {} x {}'.format(
+		count, args.sizing, args.sizing)
+	)
 
 
 def main():
@@ -127,9 +127,9 @@ def main():
 	parser.add_argument(
 		'--output_img_folder', type=str, default=None, help='path of output img')
 	parser.add_argument(
-		'--output_ann_folder', type=str, default=None, help='path to output xml ann')
+		'--output_ann_folder', type=str, default=None, help='path to output xml ann.')
 	parser.add_argument(
-		'--sizing', type=str, default=None, help='upscale the image to given res. ; None means no upscaling')
+		'--sizing', type=str, default=None, help='upscale the image to ; None means no upscaling')
 	parser.add_argument(
 		'--show_annotations', type=str, default=False, help='shows markings')
 
