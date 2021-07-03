@@ -22,6 +22,7 @@ label_dict = {
 
 def upscale_img(sizing, img):
 	if sizing != None:
+		sizing = int(sizing)
 		w, h = img.size
 		x_scale, y_scale = sizing / w, sizing / h
 		up_scaled_img = img.resize((sizing, sizing))
@@ -65,7 +66,7 @@ def convert(args):
 		output_img_path = os.path.join(os.getcwd(), args.output_img_folder, img_file)
 		img = Image.open(img_path)
 		# scaling the image by the sizing value
-		img, x_scale, y_scale = upscale_img(int(args.sizing), img)
+		img, x_scale, y_scale = upscale_img(args.sizing, img)
 		annotation_string_init = '''
 	<annotation>
 		<folder>annotations</folder>
