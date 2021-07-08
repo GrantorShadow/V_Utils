@@ -10,11 +10,11 @@ def convert(args):
 	os.makedirs(args.output_img_folder, exist_ok=True)
 	os.makedirs(args.output_ann_folder, exist_ok=True)
 
-	for im in tqdm(args.input_img_folder):
+	for im in tqdm(os.listdir(args.input_img_folder)):
 		xml_annotation = im.split('.jpg')[0] + '.xml'
 		xml_path = os.path.join(os.getcwd(), args.output_ann_folder, xml_annotation)
 
-		img_file = im.split('.txt')[0] + '.jpg'
+		img_file = im.split('.jpg')[0] + '.jpg'
 		img_path = os.path.join(os.getcwd(), args.input_img_folder, img_file)
 		output_img_path = os.path.join(os.getcwd(), args.output_img_folder, img_file)
 
